@@ -1,0 +1,11 @@
+{
+  "id": "codexian",
+  "name": "Codexian",
+  "main": "main.js",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Codexian plugin scaffold with side panel and settings.",
+  "author": "Codexian Team",
+  "authorUrl": "",
+  "isDesktopOnly": true
+}

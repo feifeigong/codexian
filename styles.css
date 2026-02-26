@@ -1,0 +1,950 @@
+/* ═══════════════════════════════════════════════════════════
+   Codexian Plugin - Claudian Style
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --codexian-brand: #10a37f;
+  --codexian-brand-hover: #0d8c6d;
+  --codexian-orange: #ff8c42;
+}
+
+/* ─────────── Root: 清除 Obsidian 所有内外边框 ─────────── */
+.codexian-root {
+  height: 100%;
+  overflow: hidden;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* 清除面板所有层级的边框/阴影/间距 */
+.workspace-leaf:has(.codexian-root),
+.workspace-leaf:has(.codexian-root) .workspace-leaf-content,
+.workspace-leaf-content:has(.codexian-root) {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 清除 Obsidian view-header 的底部分隔线 */
+.workspace-leaf:has(.codexian-root) .view-header {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.codexian-ui {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+/* ─────────── Header ─────────── */
+.codexian-header {
+  flex: 0 0 auto;
+  padding: 8px 14px 6px;
+}
+
+.codexian-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Brand icon */
+.codexian-brand-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--codexian-brand);
+}
+
+.codexian-brand-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.codexian-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-normal);
+  flex: 1;
+}
+
+.codexian-header-actions {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.codexian-header-btn {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: transparent;  /* 默认隐藏，悬停时显示，和 Claudian 一致 */
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.codexian-header:hover .codexian-header-btn {
+  color: var(--text-faint);
+}
+
+.codexian-header-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-muted) !important;
+}
+
+.codexian-header-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Hide status */
+.codexian-status {
+  display: none !important;
+}
+
+/* ─────────── Messages ─────────── */
+.codexian-messages {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.codexian-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.codexian-messages::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 3px;
+}
+
+/* ─────────── Empty State ─────────── */
+.codexian-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: codexian-greeting-in 0.8s ease-out both;
+}
+
+.codexian-empty-text {
+  font-size: 34px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, var(--text-muted), var(--codexian-brand));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes codexian-greeting-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────── Message Bubbles ─────────── */
+.codexian-message-row {
+  display: flex;
+  position: relative;
+}
+
+.codexian-message-row.user {
+  justify-content: flex-end;
+}
+
+.codexian-message-row.assistant,
+.codexian-message-row.error {
+  justify-content: flex-start;
+}
+
+/* ─────────── Message Action Buttons ─────────── */
+.codexian-msg-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.codexian-message-row:hover .codexian-msg-actions {
+  opacity: 1;
+}
+
+.codexian-msg-action-btn {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.codexian-msg-action-btn:hover {
+  color: var(--text-muted);
+  background: var(--background-modifier-hover);
+}
+
+.codexian-msg-action-btn.copied {
+  opacity: 1;
+  color: var(--codexian-brand);
+}
+
+.codexian-bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  line-height: 1.55;
+  word-wrap: break-word;
+  border: none !important;
+  outline: none !important;
+}
+
+.codexian-bubble.user {
+  background: var(--background-primary);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border) !important;
+  border-radius: 14px;
+  max-width: 85%;
+  padding: 12px 16px;
+}
+
+.codexian-bubble.assistant {
+  color: var(--text-normal);
+  border-top-left-radius: 4px;
+  background: transparent;
+  padding-left: 0;
+  max-width: 100%;
+}
+
+.codexian-bubble.error {
+  background: color-mix(in srgb, #dc3545 12%, var(--background-secondary));
+  color: var(--text-normal);
+  border-top-left-radius: 4px;
+}
+
+/* Interrupted text color (like Claudian's red "Interrupted" label) */
+.codexian-bubble.error strong {
+  color: #e05555;
+}
+
+/* Markdown inside bubbles */
+.codexian-bubble p {
+  margin: 0 0 8px;
+}
+.codexian-bubble p:last-child {
+  margin: 0;
+}
+.codexian-bubble pre {
+  background: var(--code-background);
+  border-radius: 6px;
+  padding: 8px;
+  overflow-x: auto;
+  margin: 6px 0;
+}
+.codexian-bubble code {
+  font-size: 0.9em;
+  font-family: var(--font-monospace);
+}
+.codexian-bubble ul,
+.codexian-bubble ol {
+  padding-left: 18px;
+  margin: 4px 0;
+}
+.codexian-bubble h1,
+.codexian-bubble h2,
+.codexian-bubble h3 {
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+.codexian-bubble blockquote {
+  border-left: 3px solid var(--background-modifier-border);
+  padding-left: 10px;
+  margin: 6px 0;
+  opacity: 0.8;
+}
+
+/* ─────────── Composer (Bottom Section) ─────────── */
+.codexian-composer {
+  flex: 0 0 auto;
+  background: transparent;
+  padding: 8px 12px 10px;
+}
+
+/* ─────────── Tabs + Action Buttons Row ─────────── */
+.codexian-tabs-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  min-height: 36px;
+}
+
+.codexian-tab {
+  min-width: 28px;
+  height: 30px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;       /* 非活动标签无背景 */
+  color: var(--text-muted);
+  border: 2px solid transparent;
+  position: relative;
+  transition: all 0.12s;
+  user-select: none;
+}
+
+.codexian-tab.active {
+  border-color: var(--interactive-accent);
+  background: transparent;
+  color: var(--text-normal);
+}
+
+.codexian-tab:hover:not(.active) {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.codexian-tab-delete {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #dc3545;
+  color: white;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  display: none;
+  z-index: 10;
+}
+
+.codexian-tab:hover .codexian-tab-delete {
+  display: block;
+}
+
+/* Action buttons (right side of tabs row) */
+.codexian-tab-actions {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.codexian-action-btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.12s;
+  padding: 0;
+}
+
+.codexian-action-btn:hover {
+  background: var(--background-modifier-hover) !important;
+  color: var(--text-normal);
+}
+
+.codexian-action-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ─────────── Input Container (Claudian style box) ─────────── */
+.codexian-input-container {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.codexian-input {
+  width: 100%;
+  min-height: 72px;
+  max-height: 200px;
+  padding: 0;
+  border: none !important;
+  background: transparent !important;
+  color: var(--text-normal);
+  font-size: 16px;
+  line-height: 1.55;
+  resize: none;
+  font-family: var(--font-text);
+  display: block;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.codexian-input:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.codexian-input::placeholder {
+  color: var(--text-faint);
+}
+
+.codexian-input-busy {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ─────────── Controls Bar ─────────── */
+.codexian-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  min-width: 0;
+}
+
+/* Dropup triggers */
+.codexian-dropup-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.12s;
+  flex-shrink: 0;
+}
+
+.codexian-dropup-trigger:hover {
+  background: var(--background-modifier-hover);
+}
+
+.codexian-dropup-prefix {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.codexian-dropup-label {
+  color: var(--codexian-brand);   /* Thinking值也用品牌色，和Claudian一致 */
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Model label brand color */
+.codexian-model-label-brand {
+  color: var(--codexian-brand);
+}
+
+/* Dropup menu */
+.codexian-dropup-menu {
+  position: fixed;
+  z-index: 10000;
+  background: var(--background-secondary);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  max-height: 400px;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+.codexian-dropup-item {
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.1s;
+}
+
+.codexian-dropup-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.codexian-dropup-item.active {
+  background: color-mix(in srgb, var(--codexian-brand) 15%, transparent);
+  color: var(--codexian-brand);
+  font-weight: 600;
+}
+
+/* ─────────── Spinner + Progress ─────────── */
+.codexian-spinner-wrap {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.codexian-spinner-wrap.visible {
+  display: inline-flex;
+}
+
+.codexian-spinner {
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+  animation: codexian-spin 1.2s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes codexian-spin {
+  to { transform: rotate(360deg); }
+}
+
+.codexian-progress {
+  color: var(--text-muted);
+  font-size: 12px;
+  min-width: 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─────────── Folder icon button ─────────── */
+.codexian-folder-btn {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.12s;
+  flex-shrink: 0;
+  padding: 0;
+  box-shadow: none !important;
+}
+
+.codexian-folder-btn:hover {
+  color: var(--text-normal);
+}
+
+.codexian-folder-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ─────────── YOLO toggle ─────────── */
+.codexian-toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.codexian-toggle-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  user-select: none;
+}
+
+.codexian-toggle-track {
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--background-modifier-border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.codexian-toggle-track.active {
+  background: var(--codexian-orange);
+}
+
+.codexian-toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.codexian-toggle-track.active .codexian-toggle-knob {
+  transform: translateX(16px);
+}
+
+/* ─────────── Active File Context Tag ─────────── */
+.codexian-active-file-ctx {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  margin-bottom: 6px;
+  background: var(--background-modifier-hover);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.codexian-afc-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-faint);
+}
+
+.codexian-afc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.codexian-afc-close {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-faint);
+  transition: color 0.12s, background 0.12s;
+}
+
+.codexian-afc-close:hover {
+  color: var(--text-muted);
+  background: var(--background-modifier-border);
+}
+
+/* ─────────── External Contexts ─────────── */
+.codexian-external-contexts {
+  display: none;
+  border-top: 1px solid var(--background-modifier-border);
+  margin-top: 8px;
+  padding-top: 6px;
+}
+
+.codexian-ec-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  padding: 2px 0 4px;
+}
+
+.codexian-ec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.codexian-ec-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.codexian-ec-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.codexian-ec-lock,
+.codexian-ec-remove {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--text-faint);
+  transition: color 0.12s, background 0.12s;
+}
+
+.codexian-ec-lock:hover,
+.codexian-ec-remove:hover {
+  color: var(--text-muted);
+  background: var(--background-modifier-hover);
+}
+
+.codexian-ec-lock.locked {
+  color: var(--text-muted);
+}
+
+/* Folder button active state */
+.codexian-folder-btn.active {
+  color: var(--codexian-brand) !important;
+}
+
+/* ─────────── Tool Call (Command Execution) ─────────── */
+.codexian-message-row.tool {
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.codexian-tool-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  font-size: 12px;
+  font-family: var(--font-monospace);
+  color: var(--text-muted);
+  max-width: 100%;
+}
+
+.codexian-tool-call.completed {
+  border-color: color-mix(in srgb, var(--codexian-brand) 40%, var(--background-modifier-border));
+}
+
+.codexian-tool-call.error {
+  border-color: color-mix(in srgb, #dc3545 40%, var(--background-modifier-border));
+}
+
+.codexian-tool-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+}
+
+.codexian-tool-call.completed .codexian-tool-icon {
+  color: var(--codexian-brand);
+}
+
+.codexian-tool-call.error .codexian-tool-icon {
+  color: #dc3545;
+}
+
+.codexian-tool-icon.spinning svg {
+  animation: codexian-spin 1.2s linear infinite;
+}
+
+.codexian-tool-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.codexian-tool-expand {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--text-faint);
+  transition: transform 0.15s;
+}
+
+.codexian-tool-expand.expanded {
+  transform: rotate(180deg);
+}
+
+.codexian-tool-output {
+  margin-top: 4px;
+  margin-left: 8px;
+}
+
+.codexian-tool-output pre {
+  background: var(--code-background);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 11px;
+  font-family: var(--font-monospace);
+  overflow-x: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ─────────── History Popup ─────────── */
+.codexian-history-header {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.codexian-history-list {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.codexian-history-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.codexian-history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.codexian-history-item:last-child {
+  border-bottom: none;
+}
+
+.codexian-history-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.codexian-history-item.active {
+  background: var(--background-secondary);
+  border-inline-start: 2px solid var(--interactive-accent);
+  padding-inline-start: 10px;
+}
+
+.codexian-history-item.active .codexian-history-icon {
+  color: var(--interactive-accent);
+}
+
+.codexian-history-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+.codexian-history-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.codexian-history-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-normal);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.codexian-history-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.codexian-history-time.current {
+  color: var(--codexian-brand);
+  font-weight: 500;
+}
+
+/* Action buttons: rename + delete */
+.codexian-history-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: 8px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.codexian-history-item:hover .codexian-history-actions {
+  opacity: 1;
+}
+
+.codexian-history-action-btn {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color 0.12s, background 0.12s;
+}
+
+.codexian-history-action-btn:hover {
+  color: var(--text-muted);
+  background: var(--background-modifier-border);
+}
+
+.codexian-history-delete-btn:hover {
+  color: #dc3545;
+}
+
+/* Rename input */
+.codexian-history-rename-input {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 1px 4px;
+  border: 1px solid var(--interactive-accent);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  outline: none;
+  font-family: var(--font-text);
+}
+
+/* ─────────── Diagnostics ─────────── */
+.codexian-diagnostics {
+  display: none;
+}

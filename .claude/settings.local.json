@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(head:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(cp:*)",
+      "Bash(codex --help 2>&1)",
+      "Bash(codex exec --help 2>&1)",
+      "Bash(which codex 2>&1 || where codex 2>&1)",
+      "Bash(codex --version 2>&1)",
+      "Bash(codex exec --json -m gpt-5.3-codex \"say hello in Chinese, one sentence only\" 2>&1)",
+      "Bash(codex exec --json -m gpt-5.3-codex --skip-git-repo-check \"say hello in Chinese, one sentence only\" 2>&1)",
+      "Bash(which codex 2>&1 || where codex 2>&1 || echo \"codex not found in PATH\")",
+      "Bash(mkdir -p /tmp/codexian_test && cd /tmp/codexian_test && codex exec --json -m gpt-5.3-codex \"remember: my favorite color is blue\" 2>&1)",
+      "Bash(cd /tmp/codexian_test && codex exec --skip-git-repo-check --json -m gpt-5.3-codex \"remember: my favorite color is blue\" 2>&1)",
+      "Bash(codex resume --help 2>&1)",
+      "Bash(cd /tmp/codexian_test && codex exec resume --skip-git-repo-check --json -m gpt-5.3-codex \"019c9289-75e1-7803-bd6e-d044c1ba37d4\" \"what is my favorite color?\" 2>&1)",
+      "Bash(cd \"D:\\\\study\\\\codex\\\\Codexian插件开发\" && npm run build 2>&1 && cp main.js styles.css manifest.json \"D:/study/aiyishou_note/.obsidian/plugins/codexian/\")",
+      "Bash(find /d/study/codex/Codexian* -name \"*.ts\" -not -path \"*/node_modules/*\" 2>/dev/null)",
+      "Bash(find \"D:\\\\study\\\\codex\\\\Codexian插件开发\" -type f -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.js\" -o -name \"*.jsx\" -o -name \"*.css\" -o -name \"*.scss\" 2>/dev/null | head -50)",
+      "Bash(echo \"Hello world this has many spaces\" > /tmp/test-prompt2.txt && powershell.exe -NoProfile -Command '$p = [IO.File]::ReadAllText\\(\"C:\\\\Users\\\\龚飞飞\\\\AppData\\\\Local\\\\Temp\\\\test-prompt2.txt\", [Text.Encoding]::UTF8\\); & node -e \"console.log\\(JSON.stringify\\(process.argv\\)\\)\" $p' 2>&1)",
+      "Bash(cd \"D:\\\\study\\\\codex\\\\Codexian插件开发\" && gh auth status 2>&1)",
+      "Bash(where gh 2>/dev/null || which gh 2>/dev/null || echo \"gh not found\")",
+      "Bash(where git 2>/dev/null && git --version 2>&1)",
+      "Bash(winget install --id GitHub.cli -e --accept-source-agreements --accept-package-agreements 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh --version 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh auth status 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh auth login -h github.com -p https -w 2>&1)",
+      "Bash(cd \"D:\\\\study\\\\codex\\\\Codexian插件开发\" && git init && git add -A && git status)"
+    ]
+  }
+}

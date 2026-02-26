@@ -1,0 +1,23 @@
+﻿{
+  "name": "obsidian-codexian",
+  "version": "0.1.0",
+  "description": "Codexian Obsidian plugin scaffold",
+  "main": "main.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "dev": "node esbuild.config.mjs --watch"
+  },
+  "keywords": [
+    "obsidian",
+    "plugin",
+    "codexian"
+  ],
+  "author": "Codexian Team",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "obsidian": "^1.8.0",
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.2"
+  }
+}
