@@ -1,8 +1,8 @@
 # Node modules
 node_modules/
 
-# Build output
-main.js
+# Build output (keep main.js for Obsidian plugin distribution)
+# main.js
 *.js.map
 
 # OS files
@@ -24,3 +24,6 @@ npm-debug.log*
 # Obsidian
 .obsidian/workspace*
 .trash/
+
+# Claude Code internal
+.claude/
